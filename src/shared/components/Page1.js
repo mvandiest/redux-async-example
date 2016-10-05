@@ -1,6 +1,7 @@
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import { asyncConnect } from 'redux-connect'
+import { compose, setDisplayName, setPropTypes  } from 'recompose'
 
 function fetchPage() {
   return {
@@ -13,25 +14,30 @@ function fetchPage() {
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
-@asyncConnect([
-  {
-    key: 'lunch',
-    promise: () => {
-      return Promise.resolve({ id: 1, name: 'Borsch' })
+const enhance = compose(
+  asyncConnect([
+    {
+      key: 'lunch',
+      promise: () => {
+        return Promise.resolve({ id: 1, name: 'Borsch' })
+      }
+    },
+    {
+      promise: ({ store: { dispatch } }) => {
+        return sleep(2000).then(() => dispatch(fetchPage()))
+      }
     }
-  },
-  {
-    promise: ({ store: { dispatch } }) => {
-      return sleep(2000).then(() => dispatch(fetchPage()))
-    }
-  }
-])
-export default class Page1 extends Component {
-  render() {
-    return <div>
-        <Helmet title={'Page 1'} />
-        <h1>Page 1!</h1>
-        Lunch: {this.props.lunch.name}
-    </div>
-  }
-}
+  ]),
+  setDisplayName('Page1'),
+  setPropTypes({
+    lunch: PropTypes.object
+  })
+)
+
+export default enhance(({lunch}) => {
+  return <div>
+      <Helmet title={'Page 1'} />
+      <h1>Page 1!</h1>
+      Lunch: {lunch.name}
+  </div>
+})

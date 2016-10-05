@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import { asyncConnect } from 'redux-connect'
-import { compose, setDisplayName, setPropTypes, hoistStatics  } from 'recompose'
+import { compose, setDisplayName, setPropTypes  } from 'recompose'
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
@@ -20,7 +20,7 @@ function fetchPage() {
   }
 }
 
-const enhance = hoistStatics(compose(
+const enhance = compose(
   asyncConnect([
     {
       promise: ({ store: { dispatch } }) => {
@@ -34,7 +34,7 @@ const enhance = hoistStatics(compose(
     testa: PropTypes.string,
     hello: PropTypes.string
   }),
-))
+)
 
 export default enhance(({ testa, hello }) => {
   return <div>
