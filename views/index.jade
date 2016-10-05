@@ -1,0 +1,19 @@
+html
+  // fix (=helment.htmlAttributes)
+  head
+    include gtm-head.html
+
+    !=helmet.title
+    !=helmet.base
+    !=helmet.meta
+    !=helmet.link
+    !=helmet.script
+    !=helmet.style
+
+  body
+    include gtm-body.html
+    #app!= content
+
+  script.
+    window.__data = !{JSON.stringify(state).replace(/<\//g, "<\\/")}
+  script(src='http://localhost:8080/js/app.js', defer)
