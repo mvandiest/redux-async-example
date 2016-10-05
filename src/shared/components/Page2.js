@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import { asyncConnect } from 'redux-connect'
-import { compose, withProps, setDisplayName, setPropTypes, setStatic  } from 'recompose'
+import { compose, setDisplayName, setPropTypes, hoistStatics  } from 'recompose'
 import { connect } from 'react-redux'
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   return {
     testa: 'Yo',
     hello: state.data.hello
   }
 }
 
-function fetchPage(){
+function fetchPage() {
   return {
     type: '@forte-exp/PAGE_LOAD',
     data: {
@@ -20,30 +20,27 @@ function fetchPage(){
   }
 }
 
-const enhance = compose(
-  asyncConnect([{
-    promise: ({ store: { dispatch } }) => {
-      return dispatch(fetchPage())
+const enhance = hoistStatics(compose(
+  asyncConnect([
+    {
+      promise: ({ store: { dispatch } }) => {
+        return dispatch(fetchPage())
+      }
     }
-  }]),
+  ]),
   connect(mapStateToProps),
-  withProps({
-    test: 'Hi!!'
-  }),
-  setDisplayName('Page2Tester'),
+  setDisplayName('Page2'),
   setPropTypes({
-    testa: PropTypes.string
+    testa: PropTypes.string,
+    hello: PropTypes.string
   }),
-  setStatic('mystat', 'yosef')
-)
+))
 
-export default enhance(({ lunch, test, testa, hello }) => {
-    return <div>
-        <Helmet title={'Page 2 - ' + Date.now()} />
-        <h1>Page 2!</h1>
-        {lunch}
-        {test}
-        {testa}
-        {hello}
-    </div>
+export default enhance(({ testa, hello }) => {
+  return <div>
+      <Helmet title={'Page 2'} />
+      <h1>Page 2!</h1>
+      Testa: {testa}<br />
+      Hello: {hello}
+  </div>
 })

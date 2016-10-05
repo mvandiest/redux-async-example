@@ -1,9 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import Helmet from 'react-helmet'
 import { asyncConnect } from 'redux-connect'
-import { connect } from 'react-redux'
 
-function fetchPage(){
+function fetchPage() {
   return {
     type: '@forte-exp/PAGE_LOAD',
     data: {
@@ -15,14 +14,14 @@ function fetchPage(){
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 @asyncConnect([
-  /*{
+  {
     key: 'lunch',
-    promise: ({ params, helpers }) => {
+    promise: () => {
       return Promise.resolve({ id: 1, name: 'Borsch' })
     }
-  },*/
+  },
   {
-    promise: ({ store: { dispatch, getState }, helpers }) => {
+    promise: ({ store: { dispatch } }) => {
       return sleep(2000).then(() => dispatch(fetchPage()))
     }
   }
@@ -30,9 +29,9 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 export default class Page1 extends Component {
   render() {
     return <div>
-        <Helmet title={'Page 1 - ' + Date.now()} />
+        <Helmet title={'Page 1'} />
         <h1>Page 1!</h1>
-
+        Lunch: {this.props.lunch.name}
     </div>
   }
 }

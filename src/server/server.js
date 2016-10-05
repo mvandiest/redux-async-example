@@ -1,10 +1,9 @@
 import React from 'react'
-import express from "express"
+import express from 'express'
 import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+import { match } from 'react-router'
 import { loadOnServer } from 'redux-connect'
 import Helmet from 'react-helmet'
-import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { ReduxAsyncConnect } from 'redux-connect'
 import configureStore from '../shared/store'
@@ -15,7 +14,7 @@ const app = express();
 app.set('views', './views');
 app.set('view engine', 'jade');
 
-import routes from "../shared/routes";
+import routes from '../shared/routes'
 
 app.get('/*', function (req, res) {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
@@ -32,14 +31,14 @@ app.get('/*', function (req, res) {
       */
       const store = configureStore({})
       loadOnServer({ ...renderProps, store }).then(() => {
-        //console.log('loadOnServer.begin', renderProps, store)
-        let content = renderToString(<Provider store={store} key="provider">
+
+        const content = renderToString(<Provider store={store} key='Provider'>
             <ReduxAsyncConnect {...renderProps} />
         </Provider>)
-        //console.log('loadOnServer.end')
 
-        let helmet = Helmet.rewind();
-        let state = store.getState()
+        const helmet = Helmet.rewind();
+        const state = store.getState()
+
         res.render('index', { content, helmet, state });
       })
     } else {
@@ -48,9 +47,9 @@ app.get('/*', function (req, res) {
   })
 });
 
-var server = app.listen(3000, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(3000, function () {
+  const host = server.address().address;
+  const port = server.address().port;
 
   console.log('Example app listening at http://%s:%s', host, port);
 });

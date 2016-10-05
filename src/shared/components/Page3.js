@@ -1,10 +1,10 @@
-import React from "react"
+import React from 'react'
+import Helmet from 'react-helmet'
 
-export default class Page3 extends React.Component {
-  render() {
-    const { children } = this.props
-    return <div>
-        HI!!!!!!!!!
-    </div>
-  }
+export default function Page3() {
+  return <div>
+    <Helmet title={'Page 3'} />
+    <h1>Page 3</h1>
+    HI!!!!!!!!!
+  </div>
 }
