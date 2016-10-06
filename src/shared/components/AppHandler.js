@@ -45,41 +45,10 @@ export default class AppHandler extends React.Component {
   }
 
   trackIt() {
-    //console.log('TRACK IT!!!!!!!!!!!!')
     const { dataLayer, pageType } = this.props
 
     const dataLayerMerge = {...dataLayer, ...{ pageType, event: 'page-rendered' }}
     window.dataLayer.push(dataLayerMerge)
-
-    /*
-      dealerName:
-        ''
-      dealerIdentifier:
-        ''
-      property:
-        'Dealer'
-      environment:
-        Production
-        PCUAT
-        PCQA
-        PCDEV
-        PCLocal
-      pageType:
-        HomePage
-        Category
-        SubCategory
-        SubSubCategory (if applicable)
-        Product
-        DealerConsultation (previously Quote Request, I believe)
-        Financing
-        AboutUs
-        ContactUs
-        Cart
-        Checkout
-        AccountCreation
-        MyAccount
-        Legal
-    */
   }
 
   render() {
