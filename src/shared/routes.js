@@ -12,6 +12,6 @@ export default (
     <IndexRoute component={ Home } name='Home' />
     <Route component={ Page1 } name='Type1' path="page1" />
     <Route component={ Page2 } name='Type2' path="page2" />
-    <Route component={ Page3 } name='Type3' path="page3" />
+    <Route component={ Page3 } name='Type3' path="posts/:postId" />
   </Route>
 );

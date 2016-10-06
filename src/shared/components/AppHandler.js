@@ -77,7 +77,8 @@ export default class AppHandler extends React.Component {
             <Link to='/'>Home</Link><br/>
             <Link to='/page1'>Page 1</Link><br/>
             <Link to='/page2'>Page 2</Link><br/>
-            <Link to='/page3'>Page 3</Link><br/>
+            <Link to='/posts/1'>Post 1</Link><br/>
+            <Link to='/posts/2'>Post 2</Link><br/>
         </header>
         <h1>Hello App Handler</h1>
         {children}
